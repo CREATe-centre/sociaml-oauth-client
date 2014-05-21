@@ -1,0 +1,72 @@
+OASISFormat: 0.4
+Name:        oauth-client
+Version:     0.1.0
+Synopsis:    OAuth Client Library for Ocaml
+Description: 
+  A basic client library for the OAuth protocol. Supports
+  versions 1.0a and 2.0.
+Authors:     Dominic Price
+Copyrights:  (C) 2014 Horizon Digital Economy Research
+LicenseFile: LICENSE
+License:     GPL-3
+Homepage:    https://github.com/dominicjprice/oauth-client
+Plugins:     META (0.4), DevFiles (0.4)
+BuildTools:  ocamlbuild, ocamldoc, make, awk
+
+Library oauth_client
+  Path:           src
+  Findlibname:    oauth-client
+  Modules:        Common, Util
+  Pack:           true
+  BuildDepends:
+    cohttp,
+    core,
+    cryptokit,
+    re2,
+    uri
+    
+Library oauth_client_unix
+  Path:           src
+  Findlibname:    unix
+  FindlibParent:  oauth_client
+  Modules:        Oauth_client_unix
+  Pack:           false
+  BuildDepends:
+    core,
+    oauth-client
+    
+Library oauth_client_v1_0a
+  Path:           src/v1.0a
+  Findlibname:    v1_0a
+  FindlibParent:  oauth_client
+  Modules:        Client, Signature
+  Pack:           true
+  BuildDepends:
+    cohttp,
+    cohttp.lwt,
+    core,
+    lwt,
+    lwt.syntax,
+    oauth-client,
+    uri
+    
+Document oauth_client
+  Type:           ocamlbuild (0.1.0)
+  Title:          OAuth-Client API Reference
+  Authors:        Dominic Price
+  Format:         HTML
+  Index:          index.html
+  InstallDir:     $htmldir/oauth-client
+  XOCamlbuildPath: 
+    src
+  XOCamlbuildLibraries:
+    oauth-client.v1_0a,
+    oauth-client.unix,
+    oauth-client
+    
+
+SourceRepository head
+  Type:           git
+  Location:       https://github.com/dominicjprice/oauth-client.git
+  Browser:        https://github.com/dominicjprice/oauth-client
+  Branch:         master    

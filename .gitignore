@@ -1,0 +1,27 @@
+# ocaml binaries/build files
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+_build
+setup.data
+setup.log
+*.native
+*.docdir
+
+# Eclipse/OcalIDE project settings
+.paths
+.project
+.projectSettings
+.settings
+
+# Application configuration files
+*.conf
+
+# Opam release files
+opam-releases

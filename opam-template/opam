@@ -1,0 +1,28 @@
+opam-version: "1"
+name: "${name}"
+version: "${version}"
+maintainer: "dominic.price@nottingham.ac.uk"
+homepage: "${homepage}"
+authors: [ "${authors}" ]
+license: "${license}"
+ocaml-version: [ >= "4.01.0" ]
+build: [
+  ["oasis" "setup"]
+  ["./configure" "--prefix" prefix]
+  [make "build"]
+  [make "install"]
+]
+remove: [
+  [make "uninstall"]
+  ["ocamlfind" "remove" "${library(oauth_client).findlibname}"]
+  ["ocamlfind" "remove" "${library(oauth_client_unix).findlibname}"]
+  ["ocamlfind" "remove" "${library(oauth_client_v1_0a).findlibname}"]
+]
+depends: [
+  "cohttp"
+  "core"
+  "cryptokit"
+  "lwt"
+  "re2"
+  "uri"
+]

@@ -1,0 +1,16 @@
+#!/bin/sh
+awk ' 
+function replace(name) {
+  result = ""
+  while("oasis query \""name"\"" | getline line != 0) {
+    result = result line"\n"
+  }
+  return substr(result, 1, length(result) - 1)
+}
+{while(match($0, "[$]{[^}]*}")) {
+  var = substr($0, RSTART + 2, RLENGTH - 3);
+  evar = gensub("\\.", "\\\\.", "g", var)
+  evar = gensub("\\(", "\\\\(", "g", evar)
+  evar = gensub("\\)", "\\\\)", "g", evar)
+  gsub("[$]{"evar"}", replace(var))
+}}1' < $1
