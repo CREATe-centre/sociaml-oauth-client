@@ -2,9 +2,10 @@ OASISFormat: 0.4
 Name:        oauth-client
 Version:     0.2.0
 Synopsis:    OAuth Client Library for Ocaml
-Description: 
-  A basic client library for the OAuth protocol. Supports
-  versions 1.0a and 2.0.
+Description:
+  A very basic OAuth client library for OCaml.  Currently supports
+  Version 1.0a of the OAuth protocol and has been tested against
+  the Twitter and Tumblr APIs.
 Authors:     Dominic Price
 Copyrights:  (C) 2014 Horizon Digital Economy Research
 LicenseFile: LICENSE
