@@ -1,6 +1,6 @@
 OASISFormat: 0.4
 Name:        oauth-client
-Version:     0.1.0
+Version:     0.2.0
 Synopsis:    OAuth Client Library for Ocaml
 Description: 
   A basic client library for the OAuth protocol. Supports
@@ -8,7 +8,7 @@ Description:
 Authors:     Dominic Price
 Copyrights:  (C) 2014 Horizon Digital Economy Research
 LicenseFile: LICENSE
-License:     GPL-3
+License:     ISC
 Homepage:    https://github.com/dominicjprice/oauth-client
 Plugins:     META (0.4), DevFiles (0.4)
 BuildTools:  ocamlbuild, ocamldoc, make, awk
@@ -16,14 +16,12 @@ BuildTools:  ocamlbuild, ocamldoc, make, awk
 Library oauth_client
   Path:           src
   Findlibname:    oauth-client
-  Modules:        Common, Util
+  Modules:        Util, S
   Pack:           true
   BuildDepends:
     cohttp,
     core,
-    cryptokit,
-    re2,
-    uri
+    re2
     
 Library oauth_client_unix
   Path:           src
@@ -33,6 +31,7 @@ Library oauth_client_unix
   Pack:           false
   BuildDepends:
     core,
+    cryptokit,
     oauth-client
     
 Library oauth_client_v1_0a

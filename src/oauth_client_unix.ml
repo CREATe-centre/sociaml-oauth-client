@@ -1,19 +1,7 @@
 open Core.Std
 open Oauth_client
 
-module Rnd = Random
-
-module Random : Common.RANDOM = struct
-  
-  let self_init () = Unix.gettimeofday () |> Int.of_float |> Rnd.init
-  
-  let int = Rnd.int
-  
-  let int32 = Rnd.int32
-  
-end
-
-module Clock : Common.CLOCK = struct
+module Clock : S.CLOCK = struct
   
   type tm = {
       tm_sec : int;
@@ -43,4 +31,28 @@ module Clock : Common.CLOCK = struct
       tm_isdst = tm.Unix.tm_isdst;
     }
     
+end
+
+module MAC_SHA1 : S.MAC = struct
+  
+  open Cryptokit
+  
+  type t = Cryptokit.hash
+  
+  let init = MAC.hmac_sha1
+  
+  let add_string hmac s = hmac#add_string s; hmac
+  
+  let result hmac = hmac#result
+  
+end
+
+module Random : S.RANDOM = struct
+  
+  let self_init () = Unix.gettimeofday () |> Int.of_float |> Random.init
+  
+  let int = Random.int
+  
+  let int32 = Random.int32
+  
 end

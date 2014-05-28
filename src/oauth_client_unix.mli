@@ -1,3 +1,5 @@
-module Random : Oauth_client.Common.RANDOM 
+module Clock : Oauth_client.S.CLOCK
 
-module Clock : Oauth_client.Common.CLOCK
+module MAC_SHA1 : Oauth_client.S.MAC
+
+module Random : Oauth_client.S.RANDOM 

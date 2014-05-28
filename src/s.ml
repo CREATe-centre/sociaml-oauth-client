@@ -1,9 +1,3 @@
-module type RANDOM = sig
-  val self_init : unit -> unit
-  val int : int -> int
-  val int32 : int32 -> int32
-end
-
 module type CLOCK = sig
   type tm = {
       tm_sec : int;
@@ -18,4 +12,17 @@ module type CLOCK = sig
     }
   val time : unit -> float
   val gmtime : float -> tm
+end
+
+module type MAC = sig
+  type t
+  val init : string -> t
+  val add_string : t -> string -> t
+  val result : t -> string
+end
+
+module type RANDOM = sig
+  val self_init : unit -> unit
+  val int : int -> int
+  val int32 : int32 -> int32
 end

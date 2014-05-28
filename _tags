@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: c16d8c62cd38e4b7444d73ec92f74457)
+# DO NOT EDIT (digest: e470e8de8750e6eea2d957c508d7ff3e)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -15,15 +15,14 @@
 "_darcs": not_hygienic
 # Library oauth_client
 "src/oauth_client.cmxs": use_oauth_client
-"src/common.cmx": for-pack(Oauth_client)
 "src/util.cmx": for-pack(Oauth_client)
+"src/s.cmx": for-pack(Oauth_client)
 # Library oauth_client_unix
 "src/oauth_client_unix.cmxs": use_oauth_client_unix
 <src/*.ml{,i}>: pkg_cohttp
 <src/*.ml{,i}>: pkg_core
 <src/*.ml{,i}>: pkg_cryptokit
 <src/*.ml{,i}>: pkg_re2
-<src/*.ml{,i}>: pkg_uri
 <src/*.ml{,i}>: use_oauth_client
 # Library oauth_client_v1_0a
 "src/v1.0a/oauth_client_v1_0a.cmxs": use_oauth_client_v1_0a
@@ -32,7 +31,6 @@
 <src/v1.0a/*.ml{,i}>: pkg_cohttp
 <src/v1.0a/*.ml{,i}>: pkg_cohttp.lwt
 <src/v1.0a/*.ml{,i}>: pkg_core
-<src/v1.0a/*.ml{,i}>: pkg_cryptokit
 <src/v1.0a/*.ml{,i}>: pkg_lwt
 <src/v1.0a/*.ml{,i}>: pkg_lwt.syntax
 <src/v1.0a/*.ml{,i}>: pkg_re2

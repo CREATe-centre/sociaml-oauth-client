@@ -1,25 +1,43 @@
 module type S = sig
   
-  val request_token : 
-      ?callback:Uri.t ->
-      Uri.t ->
-      Uri.t ->
-      string ->
-      string ->
-      (string * string * bool * Uri.t) Lwt.t
+  type error = 
+    | HttpResponse of int * string
+    | Exception of exn
   
-  val access_token :
-      Uri.t ->
-      string ->
-      string ->
-      string ->
-      string ->
-      string ->
-      (string * string) Lwt.t
+  type request_token = {
+    consumer_key : string;
+    consumer_secret : string;
+    token : string;
+    token_secret : string;
+    callback_confirmed : bool;
+    authorization_uri : Uri.t
+  }
+  
+  type access_token = {
+    consumer_key : string;
+    consumer_secret : string;
+    token : string;
+    token_secret : string;
+  }
+  
+  val fetch_request_token : 
+      ?callback: Uri.t ->
+      request_uri: Uri.t ->
+      authorization_uri: Uri.t ->
+      consumer_key: string ->
+      consumer_secret: string ->
+      (request_token, error) Core.Result.t Lwt.t
+  
+  val fetch_access_token :
+      access_uri: Uri.t ->
+      request_token: request_token ->
+      verifier: string ->
+      (access_token, error) Core.Result.t Lwt.t
   
 end
 
 module Make
-    (Clock : Oauth_client.Common.CLOCK)
-    (Random : Oauth_client.Common.RANDOM)
-    (Cohttp_client : Cohttp_lwt.Client) : S
+    (Clock : Oauth_client.S.CLOCK)
+    (Cohttp_client : Cohttp_lwt.Client)
+    (MAC : Oauth_client.S.MAC)
+    (Random : Oauth_client.S.RANDOM) : S

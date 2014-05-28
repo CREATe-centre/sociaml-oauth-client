@@ -1,16 +1,18 @@
 module type S = sig
-  val get_authorization_header : 
-      ?parameters : (string * string) list ->
+  val add_authorization_header : 
+      ?body_parameters : (string * string) list ->
       ?callback : Uri.t  ->
       ?token : string ->
       ?token_secret : string ->
-      string ->
-      string ->
-      [ | `POST | `GET ] ->
-      Uri.t ->
-      string * string
+      consumer_key : string ->
+      consumer_secret : string ->
+      method' : [ | `POST | `GET ] ->
+      uri : Uri.t ->
+      Cohttp.Header.t ->
+      Cohttp.Header.t
 end
 
 module Make 
-    (Clock : Oauth_client.Common.CLOCK)
-    (Random : Oauth_client.Common.RANDOM) : S
+    (Clock : Oauth_client.S.CLOCK)
+    (MAC : Oauth_client.S.MAC)
+    (Random : Oauth_client.S.RANDOM) : S
