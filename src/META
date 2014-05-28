@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 425ce474f831456124180f5ca81578a6)
+# DO NOT EDIT (digest: 480adc4bb946a8ad6a2eadbded029eef)
 version = "0.2.0"
 description = "OAuth Client Library for Ocaml"
 requires = "cohttp core re2"
@@ -19,15 +19,15 @@ package "v1_0a" (
  exists_if = "oauth_client_v1_0a.cma"
 )
 
-package "unix" (
+package "posix" (
  version = "0.2.0"
  description = "OAuth Client Library for Ocaml"
  requires = "core cryptokit oauth-client"
- archive(byte) = "oauth_client_unix.cma"
- archive(byte, plugin) = "oauth_client_unix.cma"
- archive(native) = "oauth_client_unix.cmxa"
- archive(native, plugin) = "oauth_client_unix.cmxs"
- exists_if = "oauth_client_unix.cma"
+ archive(byte) = "oauth_client_posix.cma"
+ archive(byte, plugin) = "oauth_client_posix.cma"
+ archive(native) = "oauth_client_posix.cmxa"
+ archive(native, plugin) = "oauth_client_posix.cmxs"
+ exists_if = "oauth_client_posix.cma"
 )
 # OASIS_STOP
 

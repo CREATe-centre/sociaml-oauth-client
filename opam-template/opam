@@ -15,15 +15,16 @@ build: [
 remove: [
   [make "uninstall"]
   ["ocamlfind" "remove" "${library(oauth_client).findlibname}"]
-  ["ocamlfind" "remove" "${library(oauth_client_unix).findlibname}"]
+  ["ocamlfind" "remove" "${library(oauth_client_posix).findlibname}"]
   ["ocamlfind" "remove" "${library(oauth_client_v1_0a).findlibname}"]
 ]
 depends: [
-  "cohttp"
-  "core"
-  "cryptokit"
-  "lwt"
   "oasis"
-  "re2"
+  "core"
+  "lwt"
+  "ssl"
   "uri"
+  "cohttp"
+  "cryptokit"
+  "re2"
 ]

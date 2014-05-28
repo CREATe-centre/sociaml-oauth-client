@@ -24,11 +24,11 @@ Library oauth_client
     core,
     re2
     
-Library oauth_client_unix
+Library oauth_client_posix
   Path:           src
-  Findlibname:    unix
+  Findlibname:    posix
   FindlibParent:  oauth_client
-  Modules:        Oauth_client_unix
+  Modules:        Oauth_client_posix
   Pack:           false
   BuildDepends:
     core,
@@ -61,7 +61,7 @@ Document oauth_client
     src
   XOCamlbuildLibraries:
     oauth-client.v1_0a,
-    oauth-client.unix,
+    oauth-client.posix,
     oauth-client
     
 

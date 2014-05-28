@@ -1,8 +1,8 @@
 # OASIS_START
-# DO NOT EDIT (digest: f19d9405b9af21ce551488d914257773)
+# DO NOT EDIT (digest: 06af8300c12e9ac52309b1d24cb33e98)
 v1.0a/Client
 v1.0a/Signature
-Oauth_client_unix
+Oauth_client_posix
 Util
 S
 # OASIS_STOP

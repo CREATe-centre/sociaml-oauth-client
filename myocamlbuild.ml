@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 5c4016131b0fcf5635d331c3a1bcbb3b) *)
+(* DO NOT EDIT (digest: e800daf8a27e2540d43ab7eb8393f2e2) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -598,7 +598,7 @@ let package_default =
      MyOCamlbuildBase.lib_ocaml =
        [
           ("oauth_client", ["src"], []);
-          ("oauth_client_unix", ["src"], []);
+          ("oauth_client_posix", ["src"], []);
           ("oauth_client_v1_0a", ["src/v1.0a"], [])
        ];
      lib_c = [];

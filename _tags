@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: e470e8de8750e6eea2d957c508d7ff3e)
+# DO NOT EDIT (digest: 7bbfead9350841cd97585b7e1cea6266)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -17,8 +17,8 @@
 "src/oauth_client.cmxs": use_oauth_client
 "src/util.cmx": for-pack(Oauth_client)
 "src/s.cmx": for-pack(Oauth_client)
-# Library oauth_client_unix
-"src/oauth_client_unix.cmxs": use_oauth_client_unix
+# Library oauth_client_posix
+"src/oauth_client_posix.cmxs": use_oauth_client_posix
 <src/*.ml{,i}>: pkg_cohttp
 <src/*.ml{,i}>: pkg_core
 <src/*.ml{,i}>: pkg_cryptokit
