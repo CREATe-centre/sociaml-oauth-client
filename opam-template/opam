@@ -15,8 +15,8 @@ build: [
 remove: [
   [make "uninstall"]
   ["ocamlfind" "remove" "${library(oauth_client).findlibname}"]
-  ["ocamlfind" "remove" "${library(oauth_client_posix).findlibname}"]
-  ["ocamlfind" "remove" "${library(oauth_client_v1_0a).findlibname}"]
+  ["ocamlfind" "remove" "${library(oauth_client_posix).findlibparent}.${library(oauth_client_posix).findlibname}"]
+  ["ocamlfind" "remove" "${library(oauth_client_v1_0a).findlibparent}.${library(oauth_client_v1_0a).findlibname}"]
 ]
 depends: [
   "oasis"
