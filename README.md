@@ -46,7 +46,7 @@ from the response.  Then exchange the request token for an access token, e.g.:
         request_token
         "TOKEN VERIFIER"
         
-Once you have the access token you can use the *add_authorization_header* function in
-the *Signature* module to add the authorization header to your service requests.  For
+Once you have the access token you can use the *do_get_request* and *do_post_request* 
+functions in *Client* to add the perform signed GET/POST requests.  For
 a good introduction to the OAuth authentication flow, Twitter 
 [maintain a very good guide](https://dev.twitter.com/docs/auth).

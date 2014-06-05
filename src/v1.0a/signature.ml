@@ -45,17 +45,21 @@ module Make
       | Some token -> ["oauth_token", token;]
       | None -> [])    
     in
-  
+    
+    let uri_without_query = List.fold ~init:uri 
+        ~f:(fun acc (e, _) -> Uri.remove_query_param acc e) (Uri.query uri) 
+    in
+    
     let (|+) = MAC.add_string in 
     let hmac = (Util.pct_encode consumer_secret) ^ 
         "&" ^ (Util.pct_encode token_secret) |>
       MAC.init |+ 
       (match method' with | `POST -> "POST&" | `GET -> "GET&") |+
-    	(Uri.to_string uri |> Util.pct_encode) |+ 
+    	(Uri.to_string uri_without_query |> Util.pct_encode) |+ 
       "&" |>
 		  fun hmac -> Uri.query uri |> List.fold 
           ~init:parameters
-          ~f:(fun acc (key, values) -> 
+          ~f:(fun acc (key, values) ->             
             match List.length values with
             | 1 -> List.append acc [key, match List.hd values with | Some v -> v | None -> ""]
             | _ -> List.fold ~init:[] 
@@ -83,7 +87,6 @@ module Make
         buf_add value;
         buf_add "\"";     
       ) oauth_params;
-    print_endline (Buffer.contents rbuf);
     Header.add headers "Authorization" (Buffer.contents rbuf)
   
 end

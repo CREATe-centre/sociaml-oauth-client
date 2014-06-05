@@ -21,18 +21,34 @@ module type S = sig
   }
   
   val fetch_request_token : 
-      ?callback: Uri.t ->
-      request_uri: Uri.t ->
-      authorization_uri: Uri.t ->
-      consumer_key: string ->
-      consumer_secret: string ->
+      ?callback : Uri.t ->
+      request_uri : Uri.t ->
+      authorization_uri : Uri.t ->
+      consumer_key : string ->
+      consumer_secret : string ->
+      unit ->
       (request_token, error) Core.Result.t Lwt.t
   
   val fetch_access_token :
-      access_uri: Uri.t ->
-      request_token: request_token ->
-      verifier: string ->
+      access_uri : Uri.t ->
+      request_token : request_token ->
+      verifier : string ->
       (access_token, error) Core.Result.t Lwt.t
+      
+  val do_get_request :
+      ?uri_parameters : (string * string) list ->
+      uri : Uri.t ->
+      access_token : access_token ->
+      unit ->
+      (string, error) Core.Result.t Lwt.t
+      
+  val do_post_request :
+      ?uri_parameters : (string * string) list ->
+      ?body_parameters : (string * string) list ->
+      uri : Uri.t ->
+      access_token : access_token ->
+      unit ->
+      (string, error) Core.Result.t Lwt.t
   
 end
 
@@ -81,7 +97,8 @@ module Make
       ~request_uri
       ~authorization_uri
       ~consumer_key
-      ~consumer_secret =  
+      ~consumer_secret
+      _ =  
     
     let header = Sign.add_authorization_header
         ?callback
@@ -148,6 +165,71 @@ module Make
           })
         with _ as e -> R.Error(Exception e)
       )
+    | c -> Body.to_string body >>= fun b -> 
+      return (R.Error(HttpResponse (c, b))))
+      
+  let do_get_request
+      ?uri_parameters: (uri_parameters: (string * string) list = []) 
+      ~uri
+      ~access_token
+      _ =
+        
+    let uri_with_query = (Uri.add_query_params' uri uri_parameters) in
+    
+    let header = Sign.add_authorization_header
+        ~token: access_token.token 
+        ~token_secret: access_token.token_secret
+        ~consumer_key: access_token.consumer_key
+        ~consumer_secret: access_token.consumer_secret
+        ~method': `GET
+        ~uri: uri_with_query
+        (Header.init_with "Content-Type" "application/x-www-form-urlencoded")
+    in
+    
+    Client.get ~headers:header uri_with_query >>= fun (resp, body) ->
+    (match resp.Response.status with
+    | `Code c -> c
+    | c -> Code.code_of_status c) |> (function
+    | 200 -> Body.to_string body >>= fun body_s ->
+      return (R.Ok(body_s))
+    | c -> Body.to_string body >>= fun b -> 
+      return (R.Error(HttpResponse (c, b))))
+    
+  let do_post_request
+      ?uri_parameters: (uri_parameters: (string * string) list = []) 
+      ?body_parameters: (body_parameters: (string * string) list = []) 
+      ~uri
+      ~access_token
+      _ =
+        
+    let uri_with_query = (Uri.add_query_params' uri uri_parameters) in
+    
+    let header = Sign.add_authorization_header
+        ~body_parameters: body_parameters
+        ~token: access_token.token 
+        ~token_secret: access_token.token_secret
+        ~consumer_key: access_token.consumer_key
+        ~consumer_secret: access_token.consumer_secret
+        ~method': `POST
+        ~uri: uri_with_query
+        (Header.init_with "Content-Type" "application/x-www-form-urlencoded")
+    in
+    let body = 
+      let buf = Buffer.create 16 in
+      List.iteri ~f:(fun i (k, v) ->
+        (match i with | 0 -> () | _ -> Buffer.add_char buf '&');
+        Buffer.add_string buf k;
+        Buffer.add_char buf '=';
+        Buffer.add_string buf v) body_parameters;
+      Buffer.contents buf |> Body.of_string
+    in
+    
+    Client.post ~body:body ~headers:header ~chunked:false uri_with_query >>= fun (resp, body) ->
+    (match resp.Response.status with
+    | `Code c -> c
+    | c -> Code.code_of_status c) |> (function
+    | 200 -> Body.to_string body >>= fun body_s ->
+      return (R.Ok(body_s))
     | c -> Body.to_string body >>= fun b -> 
       return (R.Error(HttpResponse (c, b))))
     
