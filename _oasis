@@ -1,6 +1,6 @@
 OASISFormat: 0.4
-Name:        oauth-client
-Version:     0.4.0
+Name:        sociaml-oauth-client
+Version:     0.4.1
 Synopsis:    OAuth Client Library for Ocaml
 Description:
   A very basic OAuth client library for OCaml.  Currently supports

@@ -1,5 +1,9 @@
 0.4.0 / 2014-06-18
 
+  * Amended correct package name in _oasis.
+  
+0.4.0 / 2014-06-18
+
   * Package rename.
   * Fixe bug where percent encoded values weren't being padded correctly.
 
