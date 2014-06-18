@@ -26,7 +26,7 @@ module Make (Random : RANDOM) : S = struct
         || c = '_'
         || c = '~' -> Buffer.add_char dst c
       | c -> Char.to_int c |>
-        Printf.sprintf "%%%X" |>
+        Printf.sprintf "%%%02X" |>
         Buffer.add_string dst) src; 
     Buffer.contents dst
   

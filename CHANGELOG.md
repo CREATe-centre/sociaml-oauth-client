@@ -1,3 +1,8 @@
+0.4.0 / 2014-06-18
+
+  * Package rename.
+  * Fixe bug where percent encoded values weren't being padded correctly.
+
 0.3.0 / 2014-06-05
 ==================
 

@@ -1,22 +1,22 @@
 OASISFormat: 0.4
 Name:        oauth-client
-Version:     0.3.0
+Version:     0.4.0
 Synopsis:    OAuth Client Library for Ocaml
 Description:
   A very basic OAuth client library for OCaml.  Currently supports
   Version 1.0a of the OAuth protocol and has been tested against
-  the Twitter and Tumblr APIs.
+  the Twitter and Tumblr OAuth APIs.
 Authors:     Dominic Price
 Copyrights:  (C) 2014 Horizon Digital Economy Research
 LicenseFile: LICENSE
 License:     ISC
-Homepage:    https://github.com/dominicjprice/oauth-client
+Homepage:    https://github.com/dominicjprice/sociaml-oauth-client
 Plugins:     META (0.4), DevFiles (0.4)
 BuildTools:  ocamlbuild, ocamldoc, make, awk
 
 Library oauth_client
   Path:           src
-  Findlibname:    oauth-client
+  Findlibname:    sociaml-oauth-client
   Modules:        Util, S
   Pack:           true
   BuildDepends:
@@ -33,7 +33,7 @@ Library oauth_client_posix
   BuildDepends:
     core,
     cryptokit,
-    oauth-client
+    sociaml-oauth-client
     
 Library oauth_client_v1_0a
   Path:           src/v1.0a
@@ -47,7 +47,7 @@ Library oauth_client_v1_0a
     core,
     lwt,
     lwt.syntax,
-    oauth-client,
+    sociaml-oauth-client,
     uri
     
 Document oauth_client
@@ -56,17 +56,17 @@ Document oauth_client
   Authors:        Dominic Price
   Format:         HTML
   Index:          index.html
-  InstallDir:     $htmldir/oauth-client
+  InstallDir:     $htmldir/sociaml-oauth-client
   XOCamlbuildPath: 
     src
   XOCamlbuildLibraries:
-    oauth-client.v1_0a,
-    oauth-client.posix,
-    oauth-client
+    sociaml-oauth-client.v1_0a,
+    sociaml-oauth-client.posix,
+    sociaml-oauth-client
     
 
 SourceRepository head
   Type:           git
-  Location:       https://github.com/dominicjprice/oauth-client.git
-  Browser:        https://github.com/dominicjprice/oauth-client
+  Location:       https://github.com/dominicjprice/sociaml-oauth-client.git
+  Browser:        https://github.com/dominicjprice/sociaml-oauth-client
   Branch:         master    

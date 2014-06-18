@@ -1,1 +1,1 @@
-archive: "https://github.com/dominicjprice/oauth-client/archive/v${version}.tar.gz"
+archive: "https://github.com/dominicjprice/sociaml-oauth-client/archive/v${version}.tar.gz"

@@ -37,6 +37,7 @@ module type S = sig
       
   val do_get_request :
       ?uri_parameters : (string * string) list ->
+      ?expect : Cohttp.Code.status_code ->
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
@@ -45,6 +46,7 @@ module type S = sig
   val do_post_request :
       ?uri_parameters : (string * string) list ->
       ?body_parameters : (string * string) list ->
+      ?expect : Cohttp.Code.status_code ->
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
@@ -170,6 +172,7 @@ module Make
       
   let do_get_request
       ?uri_parameters: (uri_parameters: (string * string) list = []) 
+      ?expect: (expect = `OK)
       ~uri
       ~access_token
       _ =
@@ -190,22 +193,23 @@ module Make
     (match resp.Response.status with
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
-    | 200 -> Body.to_string body >>= fun body_s ->
+    | c when c = (Code.code_of_status expect) -> Body.to_string body >>= fun body_s ->
       return (R.Ok(body_s))
     | c -> Body.to_string body >>= fun b -> 
       return (R.Error(HttpResponse (c, b))))
     
   let do_post_request
       ?uri_parameters: (uri_parameters: (string * string) list = []) 
-      ?body_parameters: (body_parameters: (string * string) list = []) 
+      ?body_parameters: (body_parameters: (string * string) list = [])
+      ?expect: (expect = `OK)
       ~uri
       ~access_token
       _ =
-        
+   
     let uri_with_query = (Uri.add_query_params' uri uri_parameters) in
     
     let header = Sign.add_authorization_header
-        ~body_parameters: body_parameters
+        ~body_parameters: (body_parameters |> List.map ~f:(fun (k,v) -> (k, Util.pct_encode v)))
         ~token: access_token.token 
         ~token_secret: access_token.token_secret
         ~consumer_key: access_token.consumer_key
@@ -218,9 +222,9 @@ module Make
       let buf = Buffer.create 16 in
       List.iteri ~f:(fun i (k, v) ->
         (match i with | 0 -> () | _ -> Buffer.add_char buf '&');
-        Buffer.add_string buf k;
+        Buffer.add_string buf (Util.pct_encode k);
         Buffer.add_char buf '=';
-        Buffer.add_string buf v) body_parameters;
+        Buffer.add_string buf (Util.pct_encode v)) body_parameters;
       Buffer.contents buf |> Body.of_string
     in
     
@@ -228,7 +232,7 @@ module Make
     (match resp.Response.status with
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
-    | 200 -> Body.to_string body >>= fun body_s ->
+    | c when c = (Code.code_of_status expect) -> Body.to_string body >>= fun body_s ->
       return (R.Ok(body_s))
     | c -> Body.to_string body >>= fun b -> 
       return (R.Error(HttpResponse (c, b))))
