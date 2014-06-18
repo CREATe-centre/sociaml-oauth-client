@@ -52,7 +52,7 @@ Library oauth_client_v1_0a
     
 Document oauth_client
   Type:           ocamlbuild (0.1.0)
-  Title:          OAuth-Client API Reference
+  Title:          sociaml-oauth-client Reference
   Authors:        Dominic Price
   Format:         HTML
   Index:          index.html
