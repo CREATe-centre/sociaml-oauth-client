@@ -64,7 +64,6 @@ Document oauth_client
     sociaml-oauth-client.posix,
     sociaml-oauth-client
     
-
 SourceRepository head
   Type:           git
   Location:       https://github.com/dominicjprice/sociaml-oauth-client.git
