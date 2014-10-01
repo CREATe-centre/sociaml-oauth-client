@@ -9,7 +9,7 @@ the Twitter and Tumblr APIs.
 The simplest way to install the package is through the 
 [OPAM package manager](http://opam.ocamlpro.com/), e.g.: 
 
-    opam install oauth-client
+    opam install sociaml-oauth-client
     
 Installing the package registers 3 findlib libraries:
 
