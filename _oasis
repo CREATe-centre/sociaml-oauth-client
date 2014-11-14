@@ -50,7 +50,7 @@ Library sociaml_oauth_client_v1_0a
     sociaml_oauth_client,
     uri
     
-Document oauth_client
+Document sociaml_oauth_client
   Type:           ocamlbuild (0.1.0)
   Title:          sociaml-oauth-client Reference
   Authors:        Dominic Price
