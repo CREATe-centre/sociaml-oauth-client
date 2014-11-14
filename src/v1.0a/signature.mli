@@ -13,6 +13,6 @@ module type S = sig
 end
 
 module Make 
-    (Clock : Oauth_client.S.CLOCK)
-    (MAC : Oauth_client.S.MAC)
-    (Random : Oauth_client.S.RANDOM) : S
+    (Clock : Sociaml_oauth_client.S.CLOCK)
+    (MAC : Sociaml_oauth_client.S.MAC)
+    (Random : Sociaml_oauth_client.S.RANDOM) : S

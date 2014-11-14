@@ -1,8 +1,21 @@
-0.4.0 / 2014-06-18
+0.5.0 / 2014-11-14
+==================
 
-  * Amended correct package name in _oasis.
+  * Removed dependency on Core (now Core\_kernel).
+  * Package name change: 
+    * Oauth\_client -> Sociaml\_oauth\_client.
+    * Oauth\_client\_posix -> Sociaml\_oauth\_client\_posix.
+    * Oauth\_client\_v1\_0a -> Sociaml\_oauth\_client\_v1\_0a.
+  * Licence change to GPL-V3.
+  * Require cohttp >= 0.12.0.
+
+0.4.1 / 2014-06-18
+==================
+
+  * Amended correct package name in \_oasis.
   
 0.4.0 / 2014-06-18
+==================
 
   * Package rename.
   * Fixe bug where percent encoded values weren't being padded correctly.

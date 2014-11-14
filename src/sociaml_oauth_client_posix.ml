@@ -1,5 +1,5 @@
-open Core.Std
-open Oauth_client
+open Core_kernel.Std
+open Sociaml_oauth_client
 
 module Clock : S.CLOCK = struct
   

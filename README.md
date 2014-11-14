@@ -13,10 +13,10 @@ The simplest way to install the package is through the
     
 Installing the package registers 3 findlib libraries:
 
-* *oauth-client* - Common code used by different OAuth implementations, this is mostly
+* *sociaml\_oauth\_client* - Common code used by different OAuth implementations, this is mostly
 for internal use.
-* *oauth-client.v1_0a* - Client code for V1.0a of the OAuth specification.
-* *oauth-client.posix* - Standard implementations of different module types 
+* *sociaml\_oauth\_client.v1_0a* - Client code for V1.0a of the OAuth specification.
+* *sociaml\_oauth\_client.posix* - Standard implementations of different module types 
 (Clock, Random, MAC) for use on Posix systems.
 
 ### Usage
@@ -25,8 +25,8 @@ for internal use.
 
 Construct a Client module, e.g.:
 
-    open Oauth_client_v1_0a
-    open Oauth_client_posix
+    open Sociaml_oauth_client_v1_0a
+    open Sociaml_oauth_client_posix
     module Client = Client.Make(Clock)(Cohttp_lwt_posix.Client)(MAC_SHA1)(Random)
     
 Use your consumer key and secret to fetch a request token, e,g.:

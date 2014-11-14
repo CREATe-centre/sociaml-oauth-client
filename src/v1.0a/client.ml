@@ -27,13 +27,13 @@ module type S = sig
       consumer_key : string ->
       consumer_secret : string ->
       unit ->
-      (request_token, error) Core.Result.t Lwt.t
+      (request_token, error) Core_kernel.Result.t Lwt.t
   
   val fetch_access_token :
       access_uri : Uri.t ->
       request_token : request_token ->
       verifier : string ->
-      (access_token, error) Core.Result.t Lwt.t
+      (access_token, error) Core_kernel.Result.t Lwt.t
       
   val do_get_request :
       ?uri_parameters : (string * string) list ->
@@ -41,7 +41,7 @@ module type S = sig
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
-      (string, error) Core.Result.t Lwt.t
+      (string, error) Core_kernel.Result.t Lwt.t
       
   val do_post_request :
       ?uri_parameters : (string * string) list ->
@@ -50,15 +50,15 @@ module type S = sig
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
-      (string, error) Core.Result.t Lwt.t
+      (string, error) Core_kernel.Result.t Lwt.t
   
 end
 
 module Make
-    (Clock : Oauth_client.S.CLOCK)
+    (Clock : Sociaml_oauth_client.S.CLOCK)
     (Client : Cohttp_lwt.Client)
-    (MAC : Oauth_client.S.MAC)
-    (Random : Oauth_client.S.RANDOM) : S = struct
+    (MAC : Sociaml_oauth_client.S.MAC)
+    (Random : Sociaml_oauth_client.S.RANDOM) : S = struct
      
   type error = 
     | HttpResponse of int * string
@@ -82,16 +82,16 @@ module Make
       
   exception Authorization_failed of int * string
       
-  module R = Core.Result
+  module R = Core_kernel.Result
   module Sign = Signature.Make(Clock)(MAC)(Random)
-  module Util = Oauth_client.Util.Make(Random)
+  module Util = Sociaml_oauth_client.Util.Make(Random)
   
   module Code = Cohttp.Code
   module Body = Cohttp_lwt_body
   module Header = Cohttp.Header
   module Response = Client.Response
   
-  open Core.Std
+  open Core_kernel.Std
   open Lwt
       
   let fetch_request_token 
@@ -112,7 +112,7 @@ module Make
     in  
     
     Client.post ~headers:header request_uri >>= fun (resp, body) ->
-    (match resp.Response.status with
+    (match Response.status resp with
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
     | 200 -> Body.to_string body >>= fun body_s ->
@@ -151,7 +151,7 @@ module Make
     let body = "oauth_verifier=" ^ (Util.pct_encode verifier) |> Body.of_string in
             
     Client.post ~body:body ~headers:header ~chunked:false access_uri >>= fun (resp, body) ->
-    (match resp.Response.status with
+    (match Response.status resp with
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
     | 200 -> Body.to_string body >>= fun body_s ->
@@ -190,7 +190,7 @@ module Make
     in
     
     Client.get ~headers:header uri_with_query >>= fun (resp, body) ->
-    (match resp.Response.status with
+    (match Response.status resp with
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
     | c when c = (Code.code_of_status expect) -> Body.to_string body >>= fun body_s ->
@@ -229,7 +229,7 @@ module Make
     in
     
     Client.post ~body:body ~headers:header ~chunked:false uri_with_query >>= fun (resp, body) ->
-    (match resp.Response.status with
+    (match Response.status resp with
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
     | c when c = (Code.code_of_status expect) -> Body.to_string body >>= fun body_s ->

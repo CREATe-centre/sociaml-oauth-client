@@ -18,11 +18,11 @@ remove: [
 ]
 depends: [
   "oasis"
-  "core"
+  "core_kernel"
   "lwt"
   "ssl"
   "uri"
-  "cohttp"
+  "cohttp" { >= "0.12.0" }
   "cryptokit"
   "re2"
 ]

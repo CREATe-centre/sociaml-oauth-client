@@ -12,7 +12,7 @@ end
 
 module Make (Random : RANDOM) : S = struct
 
-  open Core.Std
+  open Core_kernel.Std
   
   let pct_encode src = 
     let dst = String.length src |> Buffer.create in

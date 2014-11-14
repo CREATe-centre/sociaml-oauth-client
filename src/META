@@ -1,33 +1,34 @@
 # OASIS_START
-# DO NOT EDIT (digest: 469ecc46819c87d25f0061f04a707571)
-version = "0.4.1"
+# DO NOT EDIT (digest: 74eab3b8afbf61243abd990c81c2e8a2)
+version = "0.5.0"
 description = "OAuth Client Library for Ocaml"
-requires = "cohttp core re2"
-archive(byte) = "oauth_client.cma"
-archive(byte, plugin) = "oauth_client.cma"
-archive(native) = "oauth_client.cmxa"
-archive(native, plugin) = "oauth_client.cmxs"
-exists_if = "oauth_client.cma"
+requires = "cohttp core_kernel re2"
+archive(byte) = "sociaml_oauth_client.cma"
+archive(byte, plugin) = "sociaml_oauth_client.cma"
+archive(native) = "sociaml_oauth_client.cmxa"
+archive(native, plugin) = "sociaml_oauth_client.cmxs"
+exists_if = "sociaml_oauth_client.cma"
 package "v1_0a" (
- version = "0.4.1"
+ version = "0.5.0"
  description = "OAuth Client Library for Ocaml"
- requires = "cohttp cohttp.lwt core lwt lwt.syntax sociaml-oauth-client uri"
- archive(byte) = "oauth_client_v1_0a.cma"
- archive(byte, plugin) = "oauth_client_v1_0a.cma"
- archive(native) = "oauth_client_v1_0a.cmxa"
- archive(native, plugin) = "oauth_client_v1_0a.cmxs"
- exists_if = "oauth_client_v1_0a.cma"
+ requires =
+ "cohttp cohttp.lwt core_kernel lwt lwt.syntax sociaml_oauth_client uri"
+ archive(byte) = "sociaml_oauth_client_v1_0a.cma"
+ archive(byte, plugin) = "sociaml_oauth_client_v1_0a.cma"
+ archive(native) = "sociaml_oauth_client_v1_0a.cmxa"
+ archive(native, plugin) = "sociaml_oauth_client_v1_0a.cmxs"
+ exists_if = "sociaml_oauth_client_v1_0a.cma"
 )
 
 package "posix" (
- version = "0.4.1"
+ version = "0.5.0"
  description = "OAuth Client Library for Ocaml"
- requires = "core cryptokit sociaml-oauth-client"
- archive(byte) = "oauth_client_posix.cma"
- archive(byte, plugin) = "oauth_client_posix.cma"
- archive(native) = "oauth_client_posix.cmxa"
- archive(native, plugin) = "oauth_client_posix.cmxs"
- exists_if = "oauth_client_posix.cma"
+ requires = "core_kernel cryptokit sociaml_oauth_client"
+ archive(byte) = "sociaml_oauth_client_posix.cma"
+ archive(byte, plugin) = "sociaml_oauth_client_posix.cma"
+ archive(native) = "sociaml_oauth_client_posix.cmxa"
+ archive(native, plugin) = "sociaml_oauth_client_posix.cmxs"
+ exists_if = "sociaml_oauth_client_posix.cma"
 )
 # OASIS_STOP
 

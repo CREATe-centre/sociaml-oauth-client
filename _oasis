@@ -1,6 +1,6 @@
 OASISFormat: 0.4
 Name:        sociaml-oauth-client
-Version:     0.4.1
+Version:     0.5.0
 Synopsis:    OAuth Client Library for Ocaml
 Description:
   A very basic OAuth client library for OCaml.  Currently supports
@@ -9,45 +9,45 @@ Description:
 Authors:     Dominic Price
 Copyrights:  (C) 2014 Horizon Digital Economy Research
 LicenseFile: LICENSE
-License:     ISC
+License:     GPL-3
 Homepage:    https://github.com/dominicjprice/sociaml-oauth-client
 Plugins:     META (0.4), DevFiles (0.4)
 BuildTools:  ocamlbuild, ocamldoc, make, awk
 
-Library oauth_client
+Library sociaml_oauth_client
   Path:           src
-  Findlibname:    sociaml-oauth-client
+  Findlibname:    sociaml_oauth_client
   Modules:        Util, S
   Pack:           true
   BuildDepends:
-    cohttp,
-    core,
+    cohttp (>= 0.12.0),
+    core_kernel,
     re2
     
-Library oauth_client_posix
+Library sociaml_oauth_client_posix
   Path:           src
   Findlibname:    posix
-  FindlibParent:  oauth_client
-  Modules:        Oauth_client_posix
+  FindlibParent:  sociaml_oauth_client
+  Modules:        Sociaml_oauth_client_posix
   Pack:           false
   BuildDepends:
-    core,
+    core_kernel,
     cryptokit,
-    sociaml-oauth-client
+    sociaml_oauth_client
     
-Library oauth_client_v1_0a
+Library sociaml_oauth_client_v1_0a
   Path:           src/v1.0a
   Findlibname:    v1_0a
-  FindlibParent:  oauth_client
+  FindlibParent:  sociaml_oauth_client
   Modules:        Client, Signature
   Pack:           true
   BuildDepends:
-    cohttp,
+    cohttp (>= 0.12.0),
     cohttp.lwt,
-    core,
+    core_kernel,
     lwt,
     lwt.syntax,
-    sociaml-oauth-client,
+    sociaml_oauth_client,
     uri
     
 Document oauth_client
@@ -60,9 +60,9 @@ Document oauth_client
   XOCamlbuildPath: 
     src
   XOCamlbuildLibraries:
-    sociaml-oauth-client.v1_0a,
-    sociaml-oauth-client.posix,
-    sociaml-oauth-client
+    sociaml_oauth_client.v1_0a,
+    sociaml_oauth_client.posix,
+    sociaml_oauth_client
     
 SourceRepository head
   Type:           git
