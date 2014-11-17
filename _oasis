@@ -9,7 +9,7 @@ Description:
 Authors:     Dominic Price
 Copyrights:  (C) 2014 Horizon Digital Economy Research
 LicenseFile: LICENSE
-License:     GPL-3
+License:     ISC
 Homepage:    https://github.com/dominicjprice/sociaml-oauth-client
 Plugins:     META (0.4), DevFiles (0.4)
 BuildTools:  ocamlbuild, ocamldoc, make, awk
