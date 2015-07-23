@@ -1,3 +1,9 @@
+0.5.1 / 2015-07-23
+==================
+
+  * Require cohttp >= 0.18.0
+  * Removed dependencies on Core\_kernel and Re2
+
 0.5.0 / 2014-11-14
 ==================
 

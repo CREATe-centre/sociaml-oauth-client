@@ -1,4 +1,3 @@
-open Core_kernel.Std
 open Sociaml_oauth_client
 
 module Clock : S.CLOCK = struct
@@ -49,7 +48,7 @@ end
 
 module Random : S.RANDOM = struct
   
-  let self_init () = Unix.gettimeofday () |> Int.of_float |> Random.init
+  let self_init () = Unix.gettimeofday () |> int_of_float |> Random.init
   
   let int = Random.int
   

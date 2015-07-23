@@ -1,18 +1,17 @@
 # OASIS_START
-# DO NOT EDIT (digest: 74eab3b8afbf61243abd990c81c2e8a2)
-version = "0.5.0"
+# DO NOT EDIT (digest: 423fe03f4bff914e3efc3fbbfe34a039)
+version = "0.5.1"
 description = "OAuth Client Library for Ocaml"
-requires = "cohttp core_kernel re2"
+requires = "base64 str"
 archive(byte) = "sociaml_oauth_client.cma"
 archive(byte, plugin) = "sociaml_oauth_client.cma"
 archive(native) = "sociaml_oauth_client.cmxa"
 archive(native, plugin) = "sociaml_oauth_client.cmxs"
 exists_if = "sociaml_oauth_client.cma"
 package "v1_0a" (
- version = "0.5.0"
+ version = "0.5.1"
  description = "OAuth Client Library for Ocaml"
- requires =
- "cohttp cohttp.lwt core_kernel lwt lwt.syntax sociaml_oauth_client uri"
+ requires = "cohttp cohttp.lwt lwt lwt.syntax sociaml_oauth_client uri"
  archive(byte) = "sociaml_oauth_client_v1_0a.cma"
  archive(byte, plugin) = "sociaml_oauth_client_v1_0a.cma"
  archive(native) = "sociaml_oauth_client_v1_0a.cmxa"
@@ -21,9 +20,9 @@ package "v1_0a" (
 )
 
 package "posix" (
- version = "0.5.0"
+ version = "0.5.1"
  description = "OAuth Client Library for Ocaml"
- requires = "core_kernel cryptokit sociaml_oauth_client"
+ requires = "cryptokit sociaml_oauth_client"
  archive(byte) = "sociaml_oauth_client_posix.cma"
  archive(byte, plugin) = "sociaml_oauth_client_posix.cma"
  archive(native) = "sociaml_oauth_client_posix.cmxa"

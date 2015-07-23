@@ -1,6 +1,6 @@
 OASISFormat: 0.4
 Name:        sociaml-oauth-client
-Version:     0.5.0
+Version:     0.5.1
 Synopsis:    OAuth Client Library for Ocaml
 Description:
   A very basic OAuth client library for OCaml.  Currently supports
@@ -17,12 +17,11 @@ BuildTools:  ocamlbuild, ocamldoc, make, awk
 Library sociaml_oauth_client
   Path:           src
   Findlibname:    sociaml_oauth_client
-  Modules:        Util, S
+  Modules:        Result, S, Util
   Pack:           true
   BuildDepends:
-    cohttp (>= 0.12.0),
-    core_kernel,
-    re2
+    base64,
+    str
     
 Library sociaml_oauth_client_posix
   Path:           src
@@ -31,7 +30,6 @@ Library sociaml_oauth_client_posix
   Modules:        Sociaml_oauth_client_posix
   Pack:           false
   BuildDepends:
-    core_kernel,
     cryptokit,
     sociaml_oauth_client
     
@@ -42,9 +40,8 @@ Library sociaml_oauth_client_v1_0a
   Modules:        Client, Signature
   Pack:           true
   BuildDepends:
-    cohttp (>= 0.12.0),
+    cohttp (>= 0.18.0),
     cohttp.lwt,
-    core_kernel,
     lwt,
     lwt.syntax,
     sociaml_oauth_client,

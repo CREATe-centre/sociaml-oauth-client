@@ -18,7 +18,6 @@ module Make
     (Random : Sociaml_oauth_client.S.RANDOM) : S = struct
   
   open Cohttp
-  open Core_kernel.Std
   
   module Util = Sociaml_oauth_client.Util.Make(Random)
   
@@ -37,7 +36,7 @@ module Make
         "oauth_consumer_key", consumer_key;
         "oauth_nonce", Util.generate_nonce 32;
         "oauth_signature_method", "HMAC-SHA1";
-        "oauth_timestamp", Clock.time () |> Float.to_int |> string_of_int;
+        "oauth_timestamp", Clock.time () |> int_of_float |> string_of_int;
         "oauth_version", "1.0";
       ] |> List.append (match callback with
       | Some callback -> ["oauth_callback", Uri.to_string callback |> Util.pct_encode;]
@@ -46,41 +45,39 @@ module Make
       | None -> [])    
     in
     
-    let uri_without_query = List.fold ~init:uri 
-        ~f:(fun acc (e, _) -> Uri.remove_query_param acc e) (Uri.query uri) 
+    let uri_without_query = List.fold_left 
+        (fun acc (e, _) -> Uri.remove_query_param acc e) uri (Uri.query uri) 
     in
     
     let (|+) = MAC.add_string in 
-    let hmac = (Util.pct_encode consumer_secret) ^ 
+    let (_, hmac) = (Util.pct_encode consumer_secret) ^ 
         "&" ^ (Util.pct_encode token_secret) |>
       MAC.init |+ 
       (match method' with | `POST -> "POST&" | `GET -> "GET&") |+
-    	(Uri.to_string uri_without_query |> Util.pct_encode) |+ 
-      "&" |>
-		  fun hmac -> Uri.query uri |> List.fold 
-          ~init:parameters
-          ~f:(fun acc (key, values) ->             
+    	(Uri.to_string uri_without_query |> Util.pct_encode) |+ "&" |>
+		  fun hmac -> Uri.query uri |> List.fold_left 
+          (fun acc (key, values) ->             
             match List.length values with
-            | 1 -> List.append acc [key, match List.hd values with | Some v -> v | None -> ""]
-            | _ -> List.fold ~init:[] 
-              ~f:(fun accc value -> 
-                List.append accc [key, value]) values |>
-                  List.append acc) |>
+            | 1 -> List.append acc [key, List.hd values]
+            | _ -> List.fold_left  
+              (fun accc value -> 
+                List.append accc [key, value]) [] values |>
+                  List.append acc) parameters |>
         List.append oauth_params |> 
-        List.map ~f:(fun (key, value) -> (Util.pct_encode key, Util.pct_encode value)) |>
-        List.sort ~cmp:(fun (key1, _) (key2, _) -> String.compare key1 key2) |>
-        List.foldi ~init:hmac ~f:(fun i hmac (key, value) ->
-          hmac |+
+        List.map (fun (key, value) -> (Util.pct_encode key, Util.pct_encode value)) |>
+        List.sort (fun (key1, _) (key2, _) -> String.compare key1 key2) |>
+        List.fold_left (fun (i, hmac) (key, value) ->
+          (i + 1, hmac |+ 
           (match i with | 0 -> "" | _ -> Util.pct_encode "&") |+
-          key |+ (Util.pct_encode "=") |+ value)
+          key |+ (Util.pct_encode "=") |+ value)) (0, hmac)
     in  
       
     let rbuf = Buffer.create 16 in
     let buf_add = Buffer.add_string rbuf in
     buf_add "OAuth oauth_signature=\"";
-    MAC.result hmac |> Cohttp.Base64.encode |> Util.pct_encode |> buf_add;
+    MAC.result hmac |> B64.encode |> Util.pct_encode |> buf_add;
     buf_add "\"";
-    List.iter ~f:(fun (key, value) ->
+    List.iter (fun (key, value) ->
         buf_add ",";
         buf_add key;
         buf_add "=\"";

@@ -27,13 +27,13 @@ module type S = sig
       consumer_key : string ->
       consumer_secret : string ->
       unit ->
-      (request_token, error) Core_kernel.Result.t Lwt.t
+      (request_token, error) Sociaml_oauth_client.Result.t Lwt.t
   
   val fetch_access_token :
       access_uri : Uri.t ->
       request_token : request_token ->
       verifier : string ->
-      (access_token, error) Core_kernel.Result.t Lwt.t
+      (access_token, error) Sociaml_oauth_client.Result.t Lwt.t
       
   val do_get_request :
       ?uri_parameters : (string * string) list ->
@@ -41,7 +41,7 @@ module type S = sig
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
-      (string, error) Core_kernel.Result.t Lwt.t
+      (string, error) Sociaml_oauth_client.Result.t Lwt.t
       
   val do_post_request :
       ?uri_parameters : (string * string) list ->
@@ -50,7 +50,7 @@ module type S = sig
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
-      (string, error) Core_kernel.Result.t Lwt.t
+      (string, error) Sociaml_oauth_client.Result.t Lwt.t
   
 end
 

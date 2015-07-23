@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 5392c492ff42fb982fa44f9b8c8136d2)
+# DO NOT EDIT (digest: 3c5ddc676c79a72d31da85d7ba0f3b38)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -16,27 +16,25 @@ true: annot, bin_annot
 "_darcs": not_hygienic
 # Library sociaml_oauth_client
 "src/sociaml_oauth_client.cmxs": use_sociaml_oauth_client
-"src/util.cmx": for-pack(Sociaml_oauth_client)
+"src/result.cmx": for-pack(Sociaml_oauth_client)
 "src/s.cmx": for-pack(Sociaml_oauth_client)
+"src/util.cmx": for-pack(Sociaml_oauth_client)
 # Library sociaml_oauth_client_posix
 "src/sociaml_oauth_client_posix.cmxs": use_sociaml_oauth_client_posix
-<src/*.ml{,i,y}>: pkg_cohttp
-<src/*.ml{,i,y}>: pkg_core_kernel
+<src/*.ml{,i,y}>: pkg_base64
 <src/*.ml{,i,y}>: pkg_cryptokit
-<src/*.ml{,i,y}>: pkg_re2
+<src/*.ml{,i,y}>: pkg_str
 <src/*.ml{,i,y}>: use_sociaml_oauth_client
 # Library sociaml_oauth_client_v1_0a
 "src/v1.0a/sociaml_oauth_client_v1_0a.cmxs": use_sociaml_oauth_client_v1_0a
 "src/v1.0a/client.cmx": for-pack(Sociaml_oauth_client_v1_0a)
 "src/v1.0a/signature.cmx": for-pack(Sociaml_oauth_client_v1_0a)
+<src/v1.0a/*.ml{,i,y}>: pkg_base64
 <src/v1.0a/*.ml{,i,y}>: pkg_cohttp
 <src/v1.0a/*.ml{,i,y}>: pkg_cohttp.lwt
-<src/v1.0a/*.ml{,i,y}>: pkg_core_kernel
 <src/v1.0a/*.ml{,i,y}>: pkg_lwt
 <src/v1.0a/*.ml{,i,y}>: pkg_lwt.syntax
-<src/v1.0a/*.ml{,i,y}>: pkg_re2
+<src/v1.0a/*.ml{,i,y}>: pkg_str
 <src/v1.0a/*.ml{,i,y}>: pkg_uri
 <src/v1.0a/*.ml{,i,y}>: use_sociaml_oauth_client
 # OASIS_STOP
-<**/*.ml{,i}>: thread
-<**/*.native>: thread

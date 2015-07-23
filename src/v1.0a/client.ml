@@ -27,13 +27,13 @@ module type S = sig
       consumer_key : string ->
       consumer_secret : string ->
       unit ->
-      (request_token, error) Core_kernel.Result.t Lwt.t
+      (request_token, error) Sociaml_oauth_client.Result.t Lwt.t
   
   val fetch_access_token :
       access_uri : Uri.t ->
       request_token : request_token ->
       verifier : string ->
-      (access_token, error) Core_kernel.Result.t Lwt.t
+      (access_token, error) Sociaml_oauth_client.Result.t Lwt.t
       
   val do_get_request :
       ?uri_parameters : (string * string) list ->
@@ -41,7 +41,7 @@ module type S = sig
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
-      (string, error) Core_kernel.Result.t Lwt.t
+      (string, error) Sociaml_oauth_client.Result.t Lwt.t
       
   val do_post_request :
       ?uri_parameters : (string * string) list ->
@@ -50,7 +50,7 @@ module type S = sig
       uri : Uri.t ->
       access_token : access_token ->
       unit ->
-      (string, error) Core_kernel.Result.t Lwt.t
+      (string, error) Sociaml_oauth_client.Result.t Lwt.t
   
 end
 
@@ -82,16 +82,15 @@ module Make
       
   exception Authorization_failed of int * string
       
-  module R = Core_kernel.Result
+  module R = Sociaml_oauth_client.Result
   module Sign = Signature.Make(Clock)(MAC)(Random)
   module Util = Sociaml_oauth_client.Util.Make(Random)
   
   module Code = Cohttp.Code
   module Body = Cohttp_lwt_body
   module Header = Cohttp.Header
-  module Response = Client.Response
+  module Response = Cohttp.Response
   
-  open Core_kernel.Std
   open Lwt
       
   let fetch_request_token 
@@ -116,8 +115,7 @@ module Make
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
     | 200 -> Body.to_string body >>= fun body_s ->
-      let find k = List.Assoc.find_exn (Uri.query_of_encoded body_s) k |>
-          List.hd_exn in
+      let find k = List.assoc k (Uri.query_of_encoded body_s) |> List.hd in
       let token = find "oauth_token" in
       return (
         try
@@ -126,7 +124,7 @@ module Make
             consumer_secret = consumer_secret;
             token = token;
             token_secret = find "oauth_token_secret";
-            callback_confirmed = find "oauth_callback_confirmed" |> Bool.of_string;
+            callback_confirmed = find "oauth_callback_confirmed" |> bool_of_string;
             authorization_uri = Uri.add_query_param' authorization_uri ("oauth_token", token);
           })
         with _ as e -> R.Error(Exception e))
@@ -155,8 +153,7 @@ module Make
     | `Code c -> c
     | c -> Code.code_of_status c) |> (function
     | 200 -> Body.to_string body >>= fun body_s ->
-      let find k = List.Assoc.find_exn (Uri.query_of_encoded body_s) k |>
-          List.hd_exn in
+      let find k = List.assoc k (Uri.query_of_encoded body_s) |> List.hd in
       return (
         try 
           R.Ok({
@@ -209,7 +206,7 @@ module Make
     let uri_with_query = (Uri.add_query_params' uri uri_parameters) in
     
     let header = Sign.add_authorization_header
-        ~body_parameters: (body_parameters |> List.map ~f:(fun (k,v) -> (k, Util.pct_encode v)))
+        ~body_parameters: (body_parameters |> List.map (fun (k,v) -> (k, Util.pct_encode v)))
         ~token: access_token.token 
         ~token_secret: access_token.token_secret
         ~consumer_key: access_token.consumer_key
@@ -220,7 +217,7 @@ module Make
     in
     let body = 
       let buf = Buffer.create 16 in
-      List.iteri ~f:(fun i (k, v) ->
+      List.iteri (fun i (k, v) ->
         (match i with | 0 -> () | _ -> Buffer.add_char buf '&');
         Buffer.add_string buf (Util.pct_encode k);
         Buffer.add_char buf '=';

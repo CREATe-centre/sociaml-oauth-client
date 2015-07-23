@@ -10,6 +10,8 @@ build: [
   ["oasis" "setup"]
   ["./configure" "--prefix" prefix]
   [make "build"]
+]
+install: [
   [make "install"]
 ]
 remove: [
@@ -18,11 +20,10 @@ remove: [
 ]
 depends: [
   "oasis"
-  "core_kernel"
   "lwt"
   "ssl"
   "uri"
-  "cohttp" { >= "0.12.0" }
+  "base64"
+  "cohttp" { >= "0.18.0" }
   "cryptokit"
-  "re2"
 ]
