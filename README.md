@@ -1,8 +1,9 @@
-## OAuth Client Library for OCaml
+# sociaml-oauth-client
+> OAuth client library in OCaml.
 
-A very basic OAuth client library for OCaml.  Currently supports
-Version 1.0a of the OAuth protocol and has been tested against
-the Twitter and Tumblr APIs.
+**Development on this project has ceased.**
+
+OAuth client library for OCaml. Currently supports Version 1.0a of the OAuth protocol and has been tested against the Twitter and Tumblr APIs.
 
 ### Installation
 
@@ -50,3 +51,9 @@ Once you have the access token you can use the *do_get_request* and *do_post_req
 functions in *Client* to add the perform signed GET/POST requests.  For
 a good introduction to the OAuth authentication flow, Twitter 
 [maintain a very good guide](https://dev.twitter.com/docs/auth).
+
+## Meta
+
+Distributed under the ISC license. See ``LICENSE`` for more information.
+
+<https://github.com/CREATe-centre/sociaml-oauth-client>
