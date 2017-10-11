@@ -22,7 +22,7 @@ Library sociaml_oauth_client
   BuildDepends:
     base64,
     str
-    
+
 Library sociaml_oauth_client_posix
   Path:           src
   Findlibname:    posix
@@ -32,7 +32,7 @@ Library sociaml_oauth_client_posix
   BuildDepends:
     cryptokit,
     sociaml_oauth_client
-    
+
 Library sociaml_oauth_client_v1_0a
   Path:           src/v1.0a
   Findlibname:    v1_0a
@@ -46,7 +46,7 @@ Library sociaml_oauth_client_v1_0a
     lwt.syntax,
     sociaml_oauth_client,
     uri
-    
+
 Document sociaml_oauth_client
   Type:           ocamlbuild (0.1.0)
   Title:          sociaml-oauth-client Reference
@@ -54,15 +54,15 @@ Document sociaml_oauth_client
   Format:         HTML
   Index:          index.html
   InstallDir:     $htmldir/sociaml-oauth-client
-  XOCamlbuildPath: 
+  XOCamlbuildPath:
     src
   XOCamlbuildLibraries:
     sociaml_oauth_client.v1_0a,
     sociaml_oauth_client.posix,
     sociaml_oauth_client
-    
+
 SourceRepository head
   Type:           git
   Location:       https://github.com/dominicjprice/sociaml-oauth-client.git
   Browser:        https://github.com/dominicjprice/sociaml-oauth-client
-  Branch:         master    
+  Branch:         master
