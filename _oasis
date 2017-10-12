@@ -43,7 +43,6 @@ Library sociaml_oauth_client_v1_0a
     cohttp (>= 0.18.0),
     cohttp.lwt,
     lwt,
-    lwt.syntax,
     sociaml_oauth_client,
     uri
 
