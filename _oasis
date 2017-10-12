@@ -40,8 +40,8 @@ Library sociaml_oauth_client_v1_0a
   Modules:        Client, Signature
   Pack:           true
   BuildDepends:
-    cohttp (>= 0.18.0),
-    cohttp.lwt,
+    cohttp (>= 0.99),
+    cohttp-lwt-unix,
     lwt,
     sociaml_oauth_client,
     uri
