@@ -26,6 +26,7 @@ depends: [
   "ssl"
   "uri"
   "base64"
-  "cohttp" { >= "0.18.0" }
+  "cohttp" { >= "0.99.0" }
+  "cohttp-lwt-unix" { >= "0.99.0" }
   "cryptokit"
 ]
